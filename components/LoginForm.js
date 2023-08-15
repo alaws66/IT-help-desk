@@ -5,6 +5,7 @@ import { RotateRightRounded } from '@mui/icons-material';
 import { Alert, Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import CreateAccount from './CreateAccount';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ const LoginForm = () => {
     password: false,
     login: false
   });
+
+  const [open, setOpen] = useState(false);
 
   const handleLogin = async (e) => {
     // set loading icon
@@ -81,6 +84,7 @@ const LoginForm = () => {
         <Button
           variant="outlined"
           className="w-full"
+          onClick={() => setOpen(true)}
         >
           Create an account
         </Button>
@@ -93,6 +97,9 @@ const LoginForm = () => {
           {loading ? <RotateRightRounded className="animate-spin" /> : 'Login' }
         </Button>
       </div>
+
+      {/* create account dialog popup */}
+      <CreateAccount open={open} setOpen={setOpen} />
     </form>
   );
 }
