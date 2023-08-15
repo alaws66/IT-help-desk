@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import './globals.css';
 import { Roboto } from 'next/font/google';
 
@@ -14,8 +15,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
-        {children}
+      <body className={`${roboto.className} m-0`}>
+        <header className="w-full h-12 bg-zinc-700 shadow-md">
+          <div className="flex justify-center items-center h-full text-white">
+            <h1 className="text-2xl">IT help desk</h1>
+          </div>
+        </header>
+        <Suspense>{children}</Suspense>
       </body>
     </html>
   );
