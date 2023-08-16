@@ -48,6 +48,31 @@ const DisplayRequest = ({ request }) => {
     setLoading(false);
   }
 
+  const handleDelete = async () => {
+    setLoading(true);
+
+    // delete request
+    const response = await fetch('http://localhost:3000/api/delete-request', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: request._id
+      })
+    });
+
+    if (response.status === 200) {
+      router.refresh();
+      router.push('/requests');
+    } else {
+      setAlert(true);
+    }
+
+    setLoading(false);
+  }
+
   return (
     <div className="flex flex-col gap-3 px-3 sm:px-5 w-full lg:w-3/4 2xl:w-1/2">
       <TextField
@@ -127,6 +152,7 @@ const DisplayRequest = ({ request }) => {
           variant="contained"
           color="error"
           className="order-1"
+          onClick={handleDelete}
         >
           Delete Request
         </Button>
@@ -157,7 +183,7 @@ const DisplayRequest = ({ request }) => {
           severity="error"
           onClose={() => setAlert(false)}
         >
-          Error - Unable to update request
+          Error - Unable to make changes
         </Alert>
       }
     </div>
