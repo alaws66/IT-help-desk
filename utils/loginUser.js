@@ -1,7 +1,7 @@
 const loginUser = async ( username, password ) => {
   const response = await fetch('http://localhost:3000/api/login', {
     method: 'POST',
-    header: {
+    headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
