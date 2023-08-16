@@ -37,7 +37,7 @@ const RequestsTable = ({ requests }) => {
 
   return (
     <div>
-      <TableContainer className="max-h-[40rem] overflow-y-scroll rounded-md">
+      <TableContainer className="max-h-[calc(100vh-14rem)] overflow-y-scroll rounded-md">
         <Table sx={{ minWidth: 650 }}>
           <TableHead className="bg-[#1976d2]">
             <TableRow>

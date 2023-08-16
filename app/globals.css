@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-34nofg-MuiTableRow-root:nth-child(even) {
+  background-color: #EFEFEF;
+}
