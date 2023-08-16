@@ -2,6 +2,7 @@
 
 import formatDate from '@/utils/formatDate';
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +10,7 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const RequestsTable = ({ requests }) => {
@@ -78,6 +80,15 @@ const RequestsTable = ({ requests }) => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* create new request button */}
+      <div className="mt-5 text-right">
+        <Button variant="contained">
+          <Link href="/requests/create" className="no-underline text-white">
+            Create new request
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
