@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import './globals.css';
 import { Roboto } from 'next/font/google';
+import Loading from './loading';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
             <h1 className="text-2xl">IT help desk</h1>
           </div>
         </header>
-        <Suspense>{children}</Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </body>
     </html>
   );
