@@ -14,10 +14,12 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import DeleteWarning from './DeleteWarning';
 
-const DisplayRequest = ({ request }) => {
+const DisplayRequest = ({ request, users }) => {
   const router = useRouter();
 
   const [status, setStatus] = useState(request.status);
+  const [technician, setTechnician] = useState(request.technician ? request.technician : '');
+
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [warning, setWarning] = useState(false);
@@ -25,7 +27,7 @@ const DisplayRequest = ({ request }) => {
   const handleSave = async () => {
     setLoading(true);
 
-    // update status
+    // update status and technician
     const response = await fetch('http://localhost:3000/api/update-request', {
       method: 'POST',
       headers: {
@@ -35,7 +37,8 @@ const DisplayRequest = ({ request }) => {
       body: JSON.stringify(
         {
           id: request._id,
-          status
+          status,
+          technician: technician ? technician : null
         }
       )
     });
@@ -103,13 +106,25 @@ const DisplayRequest = ({ request }) => {
           className="w-full"
         />
 
-        <TextField
-          disabled
-          id="technician"
-          label="Technician"
-          value={request.technician ? request.technician : 'Not Assigned'}
-          className="w-full"
-        />
+        <FormControl fullWidth>
+          <InputLabel id="technician">Technician</InputLabel>
+          <Select
+            labelId="technician"
+            id="technician"
+            label="Technician"
+            value={technician}
+            onChange={e => setTechnician(e.target.value)}
+          >
+            {users.map(({ firstName, lastName }, index) => (
+              <MenuItem
+                key={index + firstName}
+                value={firstName + ' ' + lastName}
+              >
+                {firstName + ' ' + lastName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       <TextField

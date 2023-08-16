@@ -3,13 +3,13 @@ import Requests from '@/models/request';
 
 const updateRequest = async (req, res) => {
   try {
-    const { id, status } = req.body;
+    const { id, status, technician } = req.body;
 
     // connect to database
     await connect();
 
     // find by id and update status
-    const request = await Requests.findByIdAndUpdate(id, { status: status });
+    const request = await Requests.findByIdAndUpdate(id, { status: status, technician: technician });
 
     if (!request) {
       return res.status(404).json({ error: 'Request not found' });
