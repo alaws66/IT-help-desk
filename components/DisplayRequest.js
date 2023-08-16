@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import DeleteWarning from './DeleteWarning';
 
 const DisplayRequest = ({ request }) => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const DisplayRequest = ({ request }) => {
   const [status, setStatus] = useState(request.status);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const handleSave = async () => {
     setLoading(true);
@@ -36,31 +38,6 @@ const DisplayRequest = ({ request }) => {
           status
         }
       )
-    });
-
-    if (response.status === 200) {
-      router.refresh();
-      router.push('/requests');
-    } else {
-      setAlert(true);
-    }
-
-    setLoading(false);
-  }
-
-  const handleDelete = async () => {
-    setLoading(true);
-
-    // delete request
-    const response = await fetch('http://localhost:3000/api/delete-request', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: request._id
-      })
     });
 
     if (response.status === 200) {
@@ -152,7 +129,7 @@ const DisplayRequest = ({ request }) => {
           variant="contained"
           color="error"
           className="order-1"
-          onClick={handleDelete}
+          onClick={() => setWarning(true)}
         >
           Delete Request
         </Button>
@@ -186,6 +163,15 @@ const DisplayRequest = ({ request }) => {
           Error - Unable to make changes
         </Alert>
       }
+
+      {/* delete warning */}
+      <DeleteWarning
+        warning={warning}
+        setWarning={setWarning}
+        setLoading={setLoading}
+        id={request._id}
+        setAlert={setAlert}
+      />
     </div>
   );
 }

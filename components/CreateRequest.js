@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import DeleteWarning from './DeleteWarning';
 
 const CreateRequest = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ const CreateRequest = () => {
   });
 
   const [alert, setAlert] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const departments = [
     'HR',
@@ -85,6 +87,8 @@ const CreateRequest = () => {
 
   return (
     <>
+      <DeleteWarning warning={warning} setWarning={setWarning} />
+
       <div className="flex flex-col gap-3 mx-3 sm:mx-5 w-full lg:w-3/4 2xl:w-1/2">
         <TextField
           error={error.issueHeadline}
@@ -130,6 +134,7 @@ const CreateRequest = () => {
             variant="contained"
             color="error"
             className="order-1"
+            onClick={() => setWarning(true)}
           >
             Delete Request
           </Button>

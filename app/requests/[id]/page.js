@@ -20,7 +20,7 @@ const request = async ({ params }) => {
   const request = await response.json();
 
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-full">
       <DisplayRequest request={request} />
     </div>
   );
