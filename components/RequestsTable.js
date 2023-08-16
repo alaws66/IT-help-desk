@@ -23,6 +23,16 @@ const RequestsTable = ({ requests }) => {
     'Technician'
   ];
 
+  const handleClick = async (id) => {
+    // find logged in user
+    const response = await fetch(`http://localhost:3000/api/user?id=${id}`);
+    const loggedInUser = await response.json();
+
+    if (loggedInUser) {
+      router.refresh();
+    }
+  }
+
   return (
     <div>
       <TableContainer className="max-h-[40rem] overflow-y-scroll rounded-md">
@@ -56,7 +66,10 @@ const RequestsTable = ({ requests }) => {
                 {request.technician ?
                   <TableCell className="capitalize">{request.technician}</TableCell>
                   :
-                  <TableCell className="text-blue-700 cursor-pointer">
+                  <TableCell
+                    className="text-blue-700 cursor-pointer"
+                    onClick={() => handleClick(request._id)}
+                  >
                     Assign User
                   </TableCell>
                 }

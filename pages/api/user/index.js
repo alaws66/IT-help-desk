@@ -1,8 +1,11 @@
 import connect from '@/utils/connect';
 import Users from '@/models/user';
+import Requests from '@/models/request';
 
 const user = async (req, res) => {
   try {
+    const { id } = req.query;
+
     // connect to database
     await connect();
 
@@ -15,6 +18,13 @@ const user = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (id) {
+      await Requests.findByIdAndUpdate(
+        id,
+        { technician: user.firstName + ' ' + user.lastName}
+      );
     }
 
     res.json(user);
