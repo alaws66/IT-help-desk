@@ -27,6 +27,50 @@ const CreateAccount = ({ open, setOpen }) => {
     password: false
   });
 
+  const handleCreate = async () => {
+    if (firstName && lastName && username && password) {
+      setError({
+        firstName: false,
+        lastName: false,
+        username: false,
+        password: false
+      });
+
+      // create user
+      const response = await fetch('http://localhost:3000/api/create-user', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          {
+            firstName,
+            lastName,
+            username,
+            password
+          }
+        )
+      });
+
+      // check success and display outcome alert
+      if (response.status === 200) {
+        setAlert({ success: true, error: false });
+      } else {
+        setAlert({ success: false, error: true });
+      }
+
+      setOpen(false);
+    } else {
+      setError({
+        firstName: firstName ? false : true,
+        lastName: lastName ? false : true,
+        username: username ? false : true,
+        password: password ? false : true
+      });
+    }
+  }
+
   const handleChange = (input, set, e) => {
     set(e.target.value);
 
@@ -109,6 +153,7 @@ const CreateAccount = ({ open, setOpen }) => {
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             <Button
               variant="contained"
+              onClick={handleCreate}
             >
               Create Account
             </Button>
